@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aarambh — Portfolio Chat + Visualizer</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js for pie chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Sans+Tamil&family=Noto+Sans+Telugu&family=Noto+Sans+Kannada&family=Noto+Sans+Malayalam&family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: "Poppins", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Malayalam", "Noto Sans Devanagari", sans-serif;
+      min-height:100vh; background: linear-gradient(135deg,#071025,#0b2545); color:#e6eef8; padding:28px; }
+    .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; box-shadow: 0 8px 30px rgba(2,6,23,0.6); }
+    .msg { max-width:80%; padding:12px 14px; border-radius:10px; line-height:1.4; }
+    .user { background: linear-gradient(90deg,#5b6cff,#8f7bff); align-self:flex-end; color:white; }
+    .bot { background: rgba(255,255,255,0.03); color:#dbeafe; border: 1px solid rgba(255,255,255,0.03); align-self:flex-start; }
+    .small-muted { color: #9fb0d5; font-size:13px; }
+    .list-compact li { margin-bottom:8px; }
+    .pill { background: rgba(255,255,255,0.03); padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.03); }
+  </style>
+</head>
+<body class="flex flex-col items-center gap-6">
+
+  <header class="w-full max-w-4xl flex items-center justify-between mb-2">
+    <h1 class="text-2xl font-semibold">💡 Aarambh — Portfolio Chat & Visualizer</h1>
+    <div class="flex items-center gap-3">
+      <select id="languageSelect" class="p-2 rounded-md bg-slate-900 text-white">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ta">தமிழ்</option>
+        <option value="te">తెలుగు</option>
+        <option value="kn">ಕನ್ನಡ</option>
+        <option value="ml">മലയാളം</option>
+      </select>
+      <button id="clearBtn" class="pill">Clear</button>
+    </div>
+  </header>
+
+  <main class="w-full max-w-4xl glass overflow-hidden">
+    <div id="chatArea" class="p-6 messages flex flex-col gap-4" style="max-height:54vh; overflow:auto;">
+      <!-- initial bot greeting inserted by JS -->
+    </div>
+
+    <!-- visual result pane: appears when backend returns type: portfolio -->
+    <div id="resultPane" class="p-6 border-t border-t-white/5 hidden">
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Left: Chart + summary -->
+        <div class="flex-1 bg-transparent glass p-4 rounded-lg">
+          <h3 class="font-semibold mb-2">Portfolio Allocation</h3>
+          <canvas id="allocChart" width="400" height="300"></canvas>
+          <p id="projectedReturn" class="mt-3 small-muted"></p>
+          <p id="projectedNotes" class="text-sm mt-1 text-slate-300"></p>
+        </div>
+
+        <!-- Right: Cards lists -->
+        <div class="w-full lg:w-96 space-y-4">
+          <div class="glass p-4 rounded-lg">
+            <h4 class="font-semibold">Top Mutual Funds</h4>
+            <ul id="fundsList" class="mt-3 list-compact text-sm"></ul>
+          </div>
+
+          <div class="glass p-4 rounded-lg">
+            <h4 class="font-semibold">Recommended Stocks</h4>
+            <ul id="stocksList" class="mt-3 list-compact text-sm"></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Banks / Bonds / Action plan -->
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass p-4 rounded-lg">
+          <h5 class="font-semibold">Banks for Debt</h5>
+          <ul id="banksList" class="mt-3 list-compact text-sm"></ul>
+        </div>
+        <div class="glass p-4 rounded-lg">
+          <h5 class="font-semibold">Bonds</h5>
+          <ul id="bondsList" class="mt-3 list-compact text-sm"></ul>
+        </div>
+        <div class="glass p-4 rounded-lg">
+          <h5 class="font-semibold">Action Plan</h5>
+          <ol id="actionPlan" class="mt-3 list-compact text-sm"></ol>
+        </div>
+      </div>
+
+      <div class="mt-6 glass p-4 rounded-lg">
+        <h5 class="font-semibold">Risks & Mitigations</h5>
+        <ul id="risksList" class="mt-3 list-compact text-sm"></ul>
+      </div>
+    </div>
+
+    <!-- If backend returns general answer, show this block -->
+    <div id="generalPane" class="p-6 border-t border-t-white/5 hidden">
+      <div class="glass p-4 rounded-lg">
+        <h4 class="font-semibold">Answer</h4>
+        <p id="generalAnswer" class="mt-3 text-sm"></p>
+      </div>
+    </div>
+
+    <!-- input area -->
+    <div class="p-4 border-t border-t-white/5 flex gap-3 items-start">
+      <textarea id="userInput" rows="2" placeholder="Type your goals or a question (English / हिंदी / தமிழ் / తెలుగు / ಕನ್ನಡ / മലയാളം)" class="flex-1 bg-transparent text-white p-3 rounded-md border border-white/5"></textarea>
+      <div class="flex flex-col gap-2">
+        <select id="riskSelect" class="bg-slate-900 p-2 rounded-md text-white">
+          <option value="">Risk (optional)</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <button id="sendBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md">Send</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-sm text-slate-400 mt-2">Powered by Gemini • Local fallback available</footer>
+
+<script>
+/* ---------- Utilities ---------- */
+const chatArea = document.getElementById('chatArea');
+const languageSelect = document.getElementById('languageSelect');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+const clearBtn = document.getElementById('clearBtn');
+const riskSelect = document.getElementById('riskSelect');
+
+function appendChat(text, who='bot') {
+  const d = document.createElement('div');
+  d.className = 'msg ' + (who === 'user' ? 'user' : 'bot');
+  d.style.alignSelf = who === 'user' ? 'flex-end' : 'flex-start';
+  d.textContent = text;
+  chatArea.appendChild(d);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+/* initial greeting per language */
+const greetings = {
+  en: "👋 Hello! Welcome to Aarambh. Tell me your goals (capital, monthly SIP), risk appetite, or ask a question.",
+  hi: "👋 नमस्ते! Aarambh में आपका स्वागत है। अपने निवेश लक्ष्य या प्रश्न बताइए।",
+  ta: "👋 வணக்கம்! Aarambh-க்கு வருகை. உங்கள் முதலீட்டு இலக்குகளை அல்லது கேள்விகளை சொல்லுங்கள்.",
+  te: "👋 హలో! Aarambh కు స్వాగతం. మీ పెట్టుబడి లక్ష్యాలు చెప్పండి.",
+  kn: "👋 ನಮಸ್ಕಾರ! Aarambh ಗೆ ಸ್ವಾಗತ. ನಿಮ್ಮ ಹೂಡಿಕೆ ಗುರಿಗಳನ್ನು ಹೇಳಿ.",
+  ml: "👋 നമസ്കാരം! Aarambh-ലേക്ക് സ്വാഗതം. നിങ്ങളുടെ നിക്ഷേപ ലക്ഷ്യങ്ങൾ പറയൂ."
+};
+
+function setGreeting(lang='en') {
+  chatArea.innerHTML = '';
+  appendChat(greetings[lang], 'bot');
+}
+setGreeting('en');
+languageSelect.addEventListener('change', ()=> setGreeting(languageSelect.value));
+
+
+/* ---------- Chart setup ---------- */
+let allocChart = null;
+function renderAllocationChart(allocation) {
+  const ctx = document.getElementById('allocChart').getContext('2d');
+  // extract numeric values
+  const labels = [];
+  const values = [];
+  for (const [k,v] of Object.entries(allocation)) {
+    // show only non-zero
+    if (typeof v === 'number' && v > 0) {
+      // prettify key: equity_percent -> Equity
+      const label = k.replace(/_percent$/,'').replace(/^[a-z]/, c => c.toUpperCase());
+      labels.push(label);
+      values.push(v);
+    }
+  }
+  if (allocChart) allocChart.destroy();
+  allocChart = new Chart(ctx, {
+    type: 'pie',
+    data: { labels, datasets: [{ data: values }] },
+    options: { plugins: { legend: { position: 'bottom', labels: { color: '#dbeafe' } } } }
+  });
+}
+
+/* ---------- Render helpers ---------- */
+function fillList(elId, items, formatter) {
+  const el = document.getElementById(elId);
+  el.innerHTML = '';
+  if (!items || !items.length) { el.innerHTML = '<li class="text-slate-400">None suggested</li>'; return; }
+  items.forEach(it => {
+    const li = document.createElement('li');
+    li.innerHTML = formatter(it);
+    el.appendChild(li);
+  });
+}
+
+/* ---------- Handle backend response ---------- */
+function showPortfolio(data) {
+  // show pane, hide general
+  document.getElementById('resultPane').classList.remove('hidden');
+  document.getElementById('generalPane').classList.add('hidden');
+
+  // allocation chart & summary
+  renderAllocationChart(data.allocation || {});
+  document.getElementById('projectedReturn').textContent = `Projected annual return estimate: ${data.projectedAnnualReturnEstimate || 'N/A'}`;
+  document.getElementById('projectedNotes').textContent = data.projectedNotes || '';
+
+  // lists
+  fillList('fundsList', data.recommendedMutualFunds || [], f => `<strong>${escapeHtml(f.name)}</strong> · <span class="small-muted">${escapeHtml(f.type || '')}</span><div class="text-xs text-slate-300">${escapeHtml(f.why||'')}</div>`);
+  fillList('stocksList', data.recommendedStocks || [], s => `<strong>${escapeHtml(s.name)}</strong> · <span class="small-muted">${escapeHtml(s.exchange||'')}</span><div class="text-xs text-slate-300">${escapeHtml(s.why||'')}</div>`);
+  fillList('banksList', data.recommendedBanksForDebt || [], b => `<strong>${escapeHtml(b.name)}</strong> · <span class="small-muted">${escapeHtml(b.product||'')}</span><div class="text-xs text-slate-300">${escapeHtml(b.why||'')}</div>`);
+  fillList('bondsList', data.recommendedBonds || [], b => `<strong>${escapeHtml(b.name)}</strong> · <span class="small-muted">${escapeHtml(b.type||'')}</span><div class="text-xs text-slate-300">${escapeHtml(b.why||'')}</div>`);
+  // action plan and risks
+  const action = document.getElementById('actionPlan'); action.innerHTML=''; (data.actionPlan||[]).forEach((a,i)=> { const li=document.createElement('li'); li.textContent = `${i+1}. ${a}`; action.appendChild(li); });
+  const risks = document.getElementById('risksList'); risks.innerHTML=''; (data.risksAndMitigations||[]).forEach(r=> { const li=document.createElement('li'); li.textContent = '• '+r; risks.appendChild(li); });
+
+  // show resultPane smoothly
+  document.getElementById('resultPane').scrollIntoView({ behavior:'smooth' });
+}
+
+function showGeneral(data) {
+  document.getElementById('generalPane').classList.remove('hidden');
+  document.getElementById('resultPane').classList.add('hidden');
+  document.getElementById('generalAnswer').textContent = data.answer || data.raw || 'No answer provided';
+  document.getElementById('generalPane').scrollIntoView({ behavior:'smooth' });
+}
+
+/* ---------- Escape helper ---------- */
+function escapeHtml(s) {
+  if (!s) return '';
+  return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+}
+
+/* ---------- Send flow ---------- */
+async function send() {
+  const text = userInput.value.trim();
+  if (!text) return;
+  const lang = languageSelect.value || 'en';
+  const risk = riskSelect.value || '';
+  appendChat(text, 'user');
+  userInput.value = '';
+  appendChat('⏳ Generating recommendation...', 'bot');
+
+  // build body — if you prefer, include capital / monthlyInvestment fields
+  const body = { query: text, language: lang };
+  if (risk) body.riskLevel = risk;
+
+  try {
+    const res = await fetch('http://localhost:5000/api/portfolio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    // remove loading bot message
+    const last = chatArea.lastChild;
+    if (last && last.classList.contains('bot') && last.textContent.includes('Generating')) last.remove();
+
+    // if backend returned object with type
+    if (data.type === 'portfolio') {
+      appendChat('Here is a structured portfolio recommendation — displayed below.', 'bot');
+      showPortfolio(data);
+    } else if (data.type === 'general') {
+      appendChat(data.answer || data.raw || 'Answer provided (see below).', 'bot');
+      showGeneral(data);
+    } else if (data.type === 'error') {
+      appendChat('⚠️ Backend returned an error or unparsable response. See raw output.', 'bot');
+      // show raw message in general pane
+      showGeneral({ answer: data.message || 'See raw', raw: data.raw || JSON.stringify(data) });
+    } else {
+      // unknown shape — try to detect portfolio inside
+      if (data.allocation || data.recommendedMutualFunds) {
+        appendChat('Received portfolio-like result — displaying.', 'bot');
+        showPortfolio(data);
+      } else if (data.answer) {
+        appendChat('Answer received.', 'bot');
+        showGeneral(data);
+      } else {
+        appendChat('Received response — raw preview below.', 'bot');
+        showGeneral({ answer: data.raw || JSON.stringify(data) });
+      }
+    }
+  } catch (err) {
+    // remove loading message
+    const last = chatArea.lastChild;
+    if (last && last.classList.contains('bot') && last.textContent.includes('Generating')) last.remove();
+    appendChat('❌ Unable to connect to backend. Ensure backend is running on http://localhost:5000', 'bot');
+    console.error(err);
+  }
+}
+
+/* ---------- Controls ---------- */
+sendBtn.addEventListener('click', send);
+userInput.addEventListener('keypress', (e)=> { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }});
+clearBtn.addEventListener('click', ()=> { setGreeting(languageSelect.value); document.getElementById('resultPane').classList.add('hidden'); document.getElementById('generalPane').classList.add('hidden'); });
+
+</script>
+</body>
+</html>
