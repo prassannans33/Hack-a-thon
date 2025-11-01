@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "age": 24,
+    "income_monthly": 30000,
+    "capital": 100000,
+    "sip_monthly": 5000,
+    "goals": [{"name": "Retirement", "years": 35, "amount": 20000000}],
+    "userText": "I am patient and long-term oriented. I like growth.",
+    "result": {
+      "drs": 68,
+      "label": "Moderate",
+      "explanation": "Young and patient with long-term vision, moderate SIP, and growth preference."
+    }
+  },
+  {
+    "id": 2,
+    "age": 45,
+    "income_monthly": 120000,
+    "capital": 1000000,
+    "sip_monthly": 10000,
+    "goals": [{"name": "ChildEducation", "years": 10, "amount": 2000000}],
+    "userText": "I panic when markets fall. Prefer capital protection.",
+    "result": {
+      "drs": 39,
+      "label": "Conservative",
+      "explanation": "Risk-averse and short-term focus, prioritizing stability over returns."
+    }
+  },
+  {
+    "id": 3,
+    "age": 30,
+    "income_monthly": 70000,
+    "capital": 500000,
+    "sip_monthly": 8000,
+    "goals": [{"name": "House", "years": 15, "amount": 5000000}],
+    "userText": "I want to grow wealth steadily, not take huge risks.",
+    "result": {
+      "drs": 55,
+      "label": "Balanced",
+      "explanation": "Steady investor with moderate growth expectations and controlled risk appetite."
+    }
+  },
+  {
+    "id": 4,
+    "age": 28,
+    "income_monthly": 60000,
+    "capital": 200000,
+    "sip_monthly": 6000,
+    "goals": [{"name": "Car", "years": 5, "amount": 1500000}],
+    "userText": "I can take moderate risk for better returns.",
+    "result": {
+      "drs": 62,
+      "label": "Moderate",
+      "explanation": "Open to some risk for growth, short-term goal indicates partial caution."
+    }
+  },
+  {
+    "id": 5,
+    "age": 35,
+    "income_monthly": 90000,
+    "capital": 400000,
+    "sip_monthly": 15000,
+    "goals": [{"name": "Retirement", "years": 25, "amount": 15000000}],
+    "userText": "I like equities and can handle market swings.",
+    "result": {
+      "drs": 78,
+      "label": "Aggressive",
+      "explanation": "Comfortable with volatility, long-term horizon, and strong SIP discipline."
+    }
+  },
+  {
+    "id": 6,
+    "age": 50,
+    "income_monthly": 150000,
+    "capital": 3000000,
+    "sip_monthly": 5000,
+    "goals": [{"name": "Retirement", "years": 10, "amount": 10000000}],
+    "userText": "I need to protect my savings now, not take chances.",
+    "result": {
+      "drs": 32,
+      "label": "Conservative",
+      "explanation": "Older investor nearing retirement, prefers safety over growth."
+    }
+  },
+  {
+    "id": 7,
+    "age": 22,
+    "income_monthly": 25000,
+    "capital": 50000,
+    "sip_monthly": 3000,
+    "goals": [{"name": "TravelFund", "years": 3, "amount": 300000}],
+    "userText": "I want quick returns in short time.",
+    "result": {
+      "drs": 47,
+      "label": "Balanced",
+      "explanation": "Young investor seeking fast returns, moderate risk-taking but low experience."
+    }
+  },
+  {
+    "id": 8,
+    "age": 40,
+    "income_monthly": 100000,
+    "capital": 700000,
+    "sip_monthly": 8000,
+    "goals": [{"name": "ChildrenMarriage", "years": 12, "amount": 10000000}],
+    "userText": "I get nervous when my portfolio drops, prefer safe growth.",
+    "result": {
+      "drs": 45,
+      "label": "Conservative",
+      "explanation": "Risk-averse behavior with family goals, favors capital protection."
+    }
+  },
+  {
+    "id": 9,
+    "age": 27,
+    "income_monthly": 80000,
+    "capital": 300000,
+    "sip_monthly": 10000,
+    "goals": [{"name": "Retirement", "years": 30, "amount": 20000000}],
+    "userText": "I invest regularly and enjoy market volatility.",
+    "result": {
+      "drs": 83,
+      "label": "Aggressive",
+      "explanation": "High tolerance for volatility and long-term mindset make this an aggressive profile."
+    }
+  },
+  {
+    "id": 10,
+    "age": 60,
+    "income_monthly": 0,
+    "capital": 5000000,
+    "sip_monthly": 0,
+    "goals": [{"name": "WealthPreservation", "years": 15, "amount": 3000000}],
+    "userText": "I want stable income and no market risk.",
+    "result": {
+      "drs": 25,
+      "label": "Very Conservative",
+      "explanation": "Retired investor focusing solely on preservation and minimal exposure."
+    }
+  },
+  {
+    "id": 11,
+    "age": 32,
+    "income_monthly": 75000,
+    "capital": 250000,
+    "sip_monthly": 10000,
+    "goals": [{"name": "House", "years": 10, "amount": 4000000}],
+    "userText": "I prefer a mix of safety and growth.",
+    "result": {
+      "drs": 58,
+      "label": "Balanced",
+      "explanation": "Balanced preference with clear financial goal and steady income."
+    }
+  },
+  {
+    "id": 12,
+    "age": 38,
+    "income_monthly": 85000,
+    "capital": 700000,
+    "sip_monthly": 12000,
+    "goals": [{"name": "Education", "years": 15, "amount": 5000000}],
+    "userText": "I’m okay with moderate risks to achieve higher returns.",
+    "result": {
+      "drs": 66,
+      "label": "Moderate",
+      "explanation": "Shows rational risk-taking for long-term growth."
+    }
+  },
+  {
+    "id": 13,
+    "age": 26,
+    "income_monthly": 40000,
+    "capital": 100000,
+    "sip_monthly": 4000,
+    "goals": [{"name": "StartupFund", "years": 10, "amount": 2000000}],
+    "userText": "I want high returns even if it means big ups and downs.",
+    "result": {
+      "drs": 80,
+      "label": "Aggressive",
+      "explanation": "Risk-loving personality, accepts volatility for faster wealth creation."
+    }
+  },
+  {
+    "id": 14,
+    "age": 55,
+    "income_monthly": 100000,
+    "capital": 2000000,
+    "sip_monthly": 5000,
+    "goals": [{"name": "Retirement", "years": 5, "amount": 8000000}],
+    "userText": "I’m cautious now; cannot afford market shocks.",
+    "result": {
+      "drs": 35,
+      "label": "Conservative",
+      "explanation": "Near retirement, focus on safety, low risk tolerance."
+    }
+  },
+  {
+    "id": 15,
+    "age": 29,
+    "income_monthly": 65000,
+    "capital": 150000,
+    "sip_monthly": 7000,
+    "goals": [{"name": "BusinessFund", "years": 12, "amount": 4000000}],
+    "userText": "I’m optimistic about markets, I can wait through corrections.",
+    "result": {
+      "drs": 74,
+      "label": "Aggressive",
+      "explanation": "Optimistic investor willing to handle volatility for growth."
+    }
+  }
+]

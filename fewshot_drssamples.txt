@@ -1,0 +1,297 @@
+### Example 1
+INPUT:
+Age: 24
+Income: 30,000
+Capital: 100,000
+SIP: 5,000
+Goals: Retirement in 35 years, Amount 20,000,000
+User text: "I am patient and long-term oriented. I like growth."
+
+OUTPUT:
+{
+ "drs": 68,
+ "label": "Balanced",
+ "breakdown": {
+  "age_score": 80,
+  "financial_score": 55,
+  "horizon_score": 90,
+  "behavior_score": 70,
+  "goals_score": 75
+ },
+ "key_factors": [
+  "Long investment horizon",
+  "Growth-oriented mindset",
+  "Moderate income and SIP"
+ ],
+ "explanation": "Young investor with long horizon and moderate income; suitable for balanced growth strategy."
+}
+
+---
+
+### Example 2
+INPUT:
+Age: 45
+Income: 120,000
+Capital: 1,000,000
+SIP: 10,000
+Goals: Child Education in 10 years, Amount 2,000,000
+User text: "I panic when markets fall. Prefer capital protection."
+
+OUTPUT:
+{
+ "drs": 39,
+ "label": "Conservative",
+ "breakdown": {
+  "age_score": 45,
+  "financial_score": 80,
+  "horizon_score": 50,
+  "behavior_score": 20,
+  "goals_score": 45
+ },
+ "key_factors": [
+  "High financial buffer",
+  "Shorter goal horizon",
+  "Risk-averse behavior"
+ ],
+ "explanation": "Despite strong finances, user’s preference for capital protection and panic during falls indicate conservative risk profile."
+}
+
+---
+
+### Example 3
+INPUT:
+Age: 33
+Income: 60,000
+Capital: 300,000
+SIP: 7,000
+Goals: Buy a house in 5 years, Amount 5,000,000
+User text: "I want growth but scared of big dips."
+
+OUTPUT:
+{
+ "drs": 52,
+ "label": "Moderate",
+ "breakdown": {
+  "age_score": 70,
+  "financial_score": 60,
+  "horizon_score": 55,
+  "behavior_score": 45,
+  "goals_score": 55
+ },
+ "key_factors": [
+  "Good savings rate",
+  "Moderate risk tolerance",
+  "Mid-term goal horizon"
+ ],
+ "explanation": "User seeks growth but fears volatility; fits a moderate profile balancing safety and returns."
+}
+
+---
+
+### Example 4
+INPUT:
+Age: 28
+Income: 80,000
+Capital: 400,000
+SIP: 10,000
+Goals: Build wealth in 25 years
+User text: "I am okay with short-term losses for long-term growth."
+
+OUTPUT:
+{
+ "drs": 82,
+ "label": "Aggressive",
+ "breakdown": {
+  "age_score": 90,
+  "financial_score": 70,
+  "horizon_score": 90,
+  "behavior_score": 85,
+  "goals_score": 80
+ },
+ "key_factors": [
+  "Young age",
+  "Long investment horizon",
+  "High risk appetite"
+ ],
+ "explanation": "User is young and willing to tolerate volatility; ideal for aggressive equity allocation."
+}
+
+---
+
+### Example 5
+INPUT:
+Age: 52
+Income: 200,000
+Capital: 1,500,000
+SIP: 8,000
+Goals: Retirement in 8 years
+User text: "I prefer safety. No more taking chances."
+
+OUTPUT:
+{
+ "drs": 28,
+ "label": "Conservative",
+ "breakdown": {
+  "age_score": 30,
+  "financial_score": 75,
+  "horizon_score": 35,
+  "behavior_score": 25,
+  "goals_score": 40
+ },
+ "key_factors": [
+  "Short horizon to retirement",
+  "Low risk tolerance",
+  "Capital preservation mindset"
+ ],
+ "explanation": "Approaching retirement; user prefers steady returns with minimal volatility."
+}
+
+---
+
+### Example 6
+INPUT:
+Age: 35
+Income: 70,000
+Capital: 500,000
+SIP: 8,000
+Goals: Build corpus for child in 15 years
+User text: "I can handle some ups and downs for better gains."
+
+OUTPUT:
+{
+ "drs": 63,
+ "label": "Balanced",
+ "breakdown": {
+  "age_score": 75,
+  "financial_score": 65,
+  "horizon_score": 70,
+  "behavior_score": 60,
+  "goals_score": 65
+ },
+ "key_factors": [
+  "Mid-age with good horizon",
+  "Balanced mindset",
+  "Consistent savings pattern"
+ ],
+ "explanation": "User has steady savings and balanced temperament; suitable for a mixed portfolio."
+}
+
+---
+
+### Example 7
+INPUT:
+Age: 40
+Income: 150,000
+Capital: 800,000
+SIP: 20,000
+Goals: Early retirement in 15 years
+User text: "I want aggressive growth and can take risk."
+
+OUTPUT:
+{
+ "drs": 77,
+ "label": "Aggressive",
+ "breakdown": {
+  "age_score": 70,
+  "financial_score": 80,
+  "horizon_score": 80,
+  "behavior_score": 90,
+  "goals_score": 70
+ },
+ "key_factors": [
+  "Strong income and SIP",
+  "High risk tolerance",
+  "Long-term target"
+ ],
+ "explanation": "Financially strong and confident investor; inclined toward aggressive equity exposure."
+}
+
+---
+
+### Example 8
+INPUT:
+Age: 22
+Income: 20,000
+Capital: 50,000
+SIP: 1,500
+Goals: Build wealth over time
+User text: "I am new to investing and want to play it safe."
+
+OUTPUT:
+{
+ "drs": 41,
+ "label": "Moderate",
+ "breakdown": {
+  "age_score": 85,
+  "financial_score": 35,
+  "horizon_score": 90,
+  "behavior_score": 45,
+  "goals_score": 55
+ },
+ "key_factors": [
+  "Young age with low income",
+  "Early-stage investor",
+  "Low initial capacity"
+ ],
+ "explanation": "Young but cautious investor with small savings; moderately conservative approach recommended."
+}
+
+---
+
+### Example 9
+INPUT:
+Age: 31
+Income: 90,000
+Capital: 300,000
+SIP: 15,000
+Goals: Long-term wealth creation
+User text: "I invest aggressively and track markets daily."
+
+OUTPUT:
+{
+ "drs": 88,
+ "label": "Aggressive",
+ "breakdown": {
+  "age_score": 85,
+  "financial_score": 80,
+  "horizon_score": 85,
+  "behavior_score": 90,
+  "goals_score": 80
+ },
+ "key_factors": [
+  "Strong income and SIP",
+  "High involvement in markets",
+  "Aggressive mindset"
+ ],
+ "explanation": "Actively engaged, high-risk investor; suitable for equity-heavy aggressive strategy."
+}
+
+---
+
+### Example 10
+INPUT:
+Age: 38
+Income: 50,000
+Capital: 200,000
+SIP: 5,000
+Goals: Buy a house in 7 years
+User text: "I prefer stable returns; volatility makes me uncomfortable."
+
+OUTPUT:
+{
+ "drs": 46,
+ "label": "Moderate",
+ "breakdown": {
+  "age_score": 60,
+  "financial_score": 55,
+  "horizon_score": 55,
+  "behavior_score": 45,
+  "goals_score": 60
+ },
+ "key_factors": [
+  "Mid-term goal",
+  "Average income",
+  "Low risk comfort"
+ ],
+ "explanation": "User prefers predictability with moderate returns; suits a balanced low-risk approach."
+}
